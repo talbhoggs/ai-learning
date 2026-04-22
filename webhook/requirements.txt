@@ -1,0 +1,13 @@
+# FastAPI and ASGI server
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# Kafka client
+kafka-python==2.0.2
+
+# Data validation
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Environment variables
+python-dotenv==1.0.0
