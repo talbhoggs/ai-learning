@@ -1,19 +1,20 @@
-"""Kafka producer with connection handling and retry logic"""
+"""Kafka service with connection handling and retry logic"""
 import json
-import logging
 import time
 from typing import Optional, Dict, Any
 from kafka import KafkaProducer
 from kafka.errors import KafkaError, NoBrokersAvailable
-from .config import settings
 
-logger = logging.getLogger(__name__)
+from app.core.config import settings
+from app.core.logging import get_logger
+
+logger = get_logger(__name__)
 
 
-class KafkaProducerSingleton:
-    """Singleton Kafka producer with connection management"""
+class KafkaService:
+    """Kafka service with connection management"""
     
-    _instance: Optional['KafkaProducerSingleton'] = None
+    _instance: Optional['KafkaService'] = None
     _producer: Optional[KafkaProducer] = None
     
     def __new__(cls):
@@ -62,9 +63,9 @@ class KafkaProducerSingleton:
                 logger.error(f"Unexpected error connecting to Kafka: {str(e)}")
                 raise
     
-    def send_message(self, topic: str, message: Dict[str, Any], key: Optional[str] = None) -> bool:
+    def publish(self, topic: str, message: Dict[str, Any], key: Optional[str] = None) -> bool:
         """
-        Send message to Kafka topic
+        Publish message to Kafka topic
         
         Args:
             topic: Kafka topic name
@@ -119,9 +120,5 @@ class KafkaProducerSingleton:
         logger.info("Attempting to reconnect to Kafka")
         self.close()
         self._connect()
-
-
-# Global producer instance
-kafka_producer = KafkaProducerSingleton()
 
 # Made with Bob

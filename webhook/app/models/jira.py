@@ -1,6 +1,6 @@
 """Pydantic models for Jira webhook payload validation"""
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class User(BaseModel):
