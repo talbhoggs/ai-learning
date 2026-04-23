@@ -15,9 +15,21 @@ A FastAPI-based webhook service that receives Jira webhook events and publishes 
 
 ## Architecture
 
+### Flow Diagram
+
+![Architecture Diagram](docs/images/architecture-diagram.png)
+
+### Data Flow
+
 ```
 Jira → POST /webhook/jira → FastAPI → Validate Payload → Kafka Producer → Kafka Topic (jira-events)
 ```
+
+The diagram above shows the complete flow of the POC:
+1. **Jira** sends webhook events when issues are created/updated
+2. **FastAPI** receives and validates the webhook payload
+3. **Kafka Producer** publishes the event to Kafka
+4. **Kafka Topic** stores the events for downstream consumers
 
 ## Prerequisites
 
@@ -39,6 +51,50 @@ webhook/
 ├── requirements.txt          # Python dependencies
 ├── .env.example              # Environment variables template
 ├── .gitignore                # Git ignore rules
+
+## 📁 Project Structure
+
+The project follows a production-ready, scalable architecture:
+
+```
+webhook/
+├── app/
+│   ├── api/              # API layer with versioning
+│   │   ├── dependencies.py
+│   │   └── v1/
+│   │       ├── endpoints/
+│   │       │   ├── webhooks.py
+│   │       │   └── health.py
+│   │       └── router.py
+│   ├── core/             # Core functionality
+│   │   ├── config.py
+│   │   └── logging.py
+│   ├── models/           # Data models
+│   │   └── jira.py
+│   ├── schemas/          # Request/Response schemas
+│   │   ├── webhook.py
+│   │   └── health.py
+│   ├── services/         # Business logic
+│   │   ├── kafka_service.py
+│   │   └── webhook_service.py
+│   └── main.py           # FastAPI app initialization
+├── tests/                # Test suite
+│   ├── unit/
+│   └── integration/
+├── docker-compose.yml
+├── pyproject.toml
+└── requirements.txt
+```
+
+**Key Benefits:**
+- ✅ Clear separation of concerns
+- ✅ Easy to test and maintain
+- ✅ Scalable architecture
+- ✅ API versioning support
+- ✅ Dependency injection pattern
+
+For detailed structure explanation, see [FOLDER_STRUCTURE.md](FOLDER_STRUCTURE.md) and [REFACTORING_SUMMARY.md](REFACTORING_SUMMARY.md).
+
 └── README.md                 # This file
 ```
 
