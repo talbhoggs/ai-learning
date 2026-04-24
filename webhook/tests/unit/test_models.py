@@ -40,4 +40,3 @@ def test_jira_webhook_payload_invalid_type():
     with pytest.raises(ValidationError):
         JiraWebhookPayload(**invalid_payload)
 
-# Made with Bob

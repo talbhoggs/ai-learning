@@ -5,16 +5,18 @@ from pydantic import BaseModel
 
 class User(BaseModel):
     """Jira user model"""
-    self: str
-    name: str
+    accountId: str
     displayName: str
-    emailAddress: Optional[str] = None
+    active: bool
+    timeZone: str
+    accountType: str
 
 
 class IssueType(BaseModel):
     """Jira issue type model"""
     id: str
     name: str
+    description: Optional[str] = None
 
 
 class Project(BaseModel):
@@ -24,9 +26,9 @@ class Project(BaseModel):
     name: str
 
 
-class Reporter(BaseModel):
-    """Jira reporter/creator model"""
-    name: str
+class Assignee(BaseModel):
+    """Jira assignee model"""
+    accountId: str
     displayName: str
 
 
@@ -40,16 +42,26 @@ class Status(BaseModel):
     """Jira status model"""
     id: str
     name: str
+    description: Optional[str] = None
+
+
+class Comment(BaseModel):
+    """Jira comment model"""
+    id: str
+    body: str
+    author: User
+    updateAuthor: User
+    created: str
+    updated: str
+    jsdPublic: bool
 
 
 class IssueFields(BaseModel):
     """Jira issue fields model"""
     summary: str
-    description: Optional[str] = None
     issuetype: IssueType
     project: Project
-    reporter: Reporter
-    creator: Reporter
+    assignee: Optional[Assignee] = None
     priority: Priority
     status: Status
 
@@ -57,7 +69,6 @@ class IssueFields(BaseModel):
 class Issue(BaseModel):
     """Jira issue model"""
     id: str
-    self: str
     key: str
     fields: IssueFields
 
@@ -66,55 +77,67 @@ class JiraWebhookPayload(BaseModel):
     """Complete Jira webhook payload model"""
     timestamp: int
     webhookEvent: str
-    user: User
+    comment: Optional[Comment] = None
     issue: Issue
+    eventType: Optional[str] = None
 
     class Config:
         json_schema_extra = {
             "example": {
-                "timestamp": 1713782400000,
-                "webhookEvent": "jira:issue_created",
-                "user": {
-                    "self": "https://your-jira/rest/api/2/user?username=charles",
-                    "name": "charles",
-                    "displayName": "Charles D",
-                    "emailAddress": "charles@example.com"
+                "timestamp": 1777011862928,
+                "webhookEvent": "comment_created",
+                "comment": {
+                    "id": "10034",
+                    "body": "Test 3 comment",
+                    "author": {
+                        "accountId": "557058:9116cb26-9a2b-417f-9b5a-d271fc166d6d",
+                        "displayName": "Charles Amper",
+                        "active": True,
+                        "timeZone": "Asia/Manila",
+                        "accountType": "atlassian"
+                    },
+                    "updateAuthor": {
+                        "accountId": "557058:9116cb26-9a2b-417f-9b5a-d271fc166d6d",
+                        "displayName": "Charles Amper",
+                        "active": True,
+                        "timeZone": "Asia/Manila",
+                        "accountType": "atlassian"
+                    },
+                    "created": "2026-04-24T14:24:22.928+0800",
+                    "updated": "2026-04-24T14:24:22.928+0800",
+                    "jsdPublic": True
                 },
                 "issue": {
-                    "id": "10001",
-                    "self": "https://your-jira/rest/api/2/issue/10001",
-                    "key": "PROJ-123",
+                    "id": "10000",
+                    "key": "SCRUM-1",
                     "fields": {
-                        "summary": "API returns 500 on login",
-                        "description": "Steps to reproduce...",
+                        "summary": "Http issue with server",
                         "issuetype": {
-                            "id": "10004",
-                            "name": "Bug"
+                            "id": "10003",
+                            "name": "Task",
+                            "description": "Tasks track small, distinct pieces of work."
                         },
                         "project": {
                             "id": "10000",
-                            "key": "PROJ",
-                            "name": "Project Alpha"
+                            "key": "SCRUM",
+                            "name": "My Scrum Project"
                         },
-                        "reporter": {
-                            "name": "charles",
-                            "displayName": "Charles D"
-                        },
-                        "creator": {
-                            "name": "charles",
-                            "displayName": "Charles D"
+                        "assignee": {
+                            "accountId": "557058:9116cb26-9a2b-417f-9b5a-d271fc166d6d",
+                            "displayName": "Charles Amper"
                         },
                         "priority": {
                             "id": "3",
                             "name": "Medium"
                         },
                         "status": {
-                            "id": "1",
-                            "name": "To Do"
+                            "id": "10001",
+                            "name": "In Progress",
+                            "description": "This work item is being actively worked on."
                         }
                     }
-                }
+                },
+                "eventType": "primaryAction"
             }
         }
 
-# Made with Bob

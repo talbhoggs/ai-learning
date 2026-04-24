@@ -3,9 +3,10 @@ from .jira import (
     User,
     IssueType,
     Project,
-    Reporter,
+    Assignee,
     Priority,
     Status,
+    Comment,
     IssueFields,
     Issue,
     JiraWebhookPayload
@@ -15,12 +16,12 @@ __all__ = [
     "User",
     "IssueType",
     "Project",
-    "Reporter",
+    "Assignee",
     "Priority",
     "Status",
+    "Comment",
     "IssueFields",
     "Issue",
     "JiraWebhookPayload"
 ]
 
-# Made with Bob

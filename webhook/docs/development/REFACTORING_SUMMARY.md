@@ -55,14 +55,21 @@ webhook/
 │       ├── __init__.py
 │       └── test_api.py              # API integration tests
 │
+├── docs/                            # Documentation directory
+│   ├── guides/
+│   │   └── DEBUGGING_GUIDE.md
+│   ├── development/
+│   │   ├── FOLDER_STRUCTURE.md
+│   │   ├── REFACTORING_SUMMARY.md   # This file
+│   │   └── CLEANUP_SUMMARY.md
+│   └── images/
+│       └── architecture-diagram.png
 ├── docker-compose.yml
 ├── pyproject.toml
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
 ├── README.md
-├── FOLDER_STRUCTURE.md
-├── REFACTORING_SUMMARY.md           # This file
 └── test_payload.json
 ```
 

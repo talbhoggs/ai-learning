@@ -68,16 +68,21 @@ webhook/
 │       ├── __init__.py
 │       └── test_api.py
 │
+├── docs/                                # ✅ Documentation directory
+│   ├── guides/
+│   │   └── DEBUGGING_GUIDE.md
+│   ├── development/
+│   │   ├── FOLDER_STRUCTURE.md
+│   │   ├── REFACTORING_SUMMARY.md
+│   │   └── CLEANUP_SUMMARY.md           # This file
+│   └── images/
+│       └── architecture-diagram.png
 ├── docker-compose.yml
 ├── pyproject.toml
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
 ├── README.md                            # ✅ Updated with diagram
-├── FOLDER_STRUCTURE.md
-├── REFACTORING_SUMMARY.md
-├── CLEANUP_SUMMARY.md                   # This file
-├── diagram.png                          # ✅ Added to README
 └── test_payload.json
 ```
 
@@ -131,10 +136,11 @@ All old files have been successfully removed. The project now contains only the 
 - **Total:** 26 Python files
 
 **Documentation:**
-- README.md (with architecture diagram)
-- FOLDER_STRUCTURE.md
-- REFACTORING_SUMMARY.md
-- CLEANUP_SUMMARY.md
+- README.md (with architecture diagram and links to docs)
+- docs/guides/DEBUGGING_GUIDE.md
+- docs/development/FOLDER_STRUCTURE.md
+- docs/development/REFACTORING_SUMMARY.md
+- docs/development/CLEANUP_SUMMARY.md
 
 ## Next Steps
 

@@ -59,4 +59,3 @@ def sample_jira_payload():
         }
     }
 
-# Made with Bob

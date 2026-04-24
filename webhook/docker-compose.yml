@@ -67,4 +67,3 @@ networks:
   kafka-network:
     driver: bridge
 
-# Made with Bob
