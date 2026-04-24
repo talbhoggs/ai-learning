@@ -15,4 +15,3 @@ api_router.include_router(
     tags=["webhooks"]
 )
 
-# Made with Bob

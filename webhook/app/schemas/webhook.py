@@ -10,4 +10,3 @@ class WebhookResponse(BaseModel):
     webhook_event: str
     kafka_topic: str
 
-# Made with Bob

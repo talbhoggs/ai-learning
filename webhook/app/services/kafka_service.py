@@ -121,4 +121,3 @@ class KafkaService:
         self.close()
         self._connect()
 
-# Made with Bob

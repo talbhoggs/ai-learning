@@ -16,4 +16,3 @@ def get_webhook_service() -> WebhookService:
     """Get webhook service instance"""
     return WebhookService(kafka_service=get_kafka_service())
 
-# Made with Bob

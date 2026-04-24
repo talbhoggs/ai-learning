@@ -1,7 +1,9 @@
 """FastAPI application for Jira webhook to Kafka"""
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from pydantic import ValidationError
 
 from app.core.config import settings
 from app.core.logging import setup_logging, get_logger
@@ -45,8 +47,36 @@ app = FastAPI(
 app.include_router(api_router)
 
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Handle validation errors with detailed logging"""
+    # Get the raw body for debugging
+    try:
+        body = await request.body()
+        body_str = body.decode('utf-8')
+    except Exception:
+        body_str = "Unable to read request body"
+    
+    # Log detailed validation error
+    logger.error(f"Validation error for {request.method} {request.url.path}")
+    logger.error(f"Query params: {dict(request.query_params)}")
+    logger.error(f"Headers: {dict(request.headers)}")
+    logger.error(f"Raw body: {body_str}")
+    logger.error(f"Validation errors: {exc.errors()}")
+    
+    # Return detailed error response
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": "Validation Error",
+            "detail": exc.errors(),
+            "body": body_str if settings.log_level == "DEBUG" else "Enable DEBUG logging to see request body"
+        }
+    )
+
+
 @app.exception_handler(Exception)
-async def global_exception_handler(request, exc):
+async def global_exception_handler(request: Request, exc: Exception):
     """Global exception handler"""
     logger.error(f"Unhandled exception: {str(exc)}", exc_info=True)
     return JSONResponse(
@@ -57,4 +87,3 @@ async def global_exception_handler(request, exc):
         }
     )
 
-# Made with Bob

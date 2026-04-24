@@ -48,4 +48,3 @@ def test_webhook_endpoint_invalid_payload(client):
     
     assert response.status_code == 422  # Validation error
 
-# Made with Bob

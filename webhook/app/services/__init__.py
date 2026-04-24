@@ -7,4 +7,3 @@ __all__ = [
     "WebhookService"
 ]
 
-# Made with Bob

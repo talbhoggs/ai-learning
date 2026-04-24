@@ -44,4 +44,3 @@ async def health_check(
         "kafka": "connected"
     }
 
-# Made with Bob

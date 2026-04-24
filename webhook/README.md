@@ -55,7 +55,6 @@ webhook/
 ## 📁 Project Structure
 
 The project follows a production-ready, scalable architecture:
-
 ```
 webhook/
 ├── app/
@@ -78,12 +77,22 @@ webhook/
 │   │   ├── kafka_service.py
 │   │   └── webhook_service.py
 │   └── main.py           # FastAPI app initialization
+├── docs/                 # Documentation
+│   ├── guides/
+│   │   └── DEBUGGING_GUIDE.md
+│   ├── development/
+│   │   ├── FOLDER_STRUCTURE.md
+│   │   ├── REFACTORING_SUMMARY.md
+│   │   └── CLEANUP_SUMMARY.md
+│   └── images/
+│       └── architecture-diagram.png
 ├── tests/                # Test suite
 │   ├── unit/
 │   └── integration/
 ├── docker-compose.yml
 ├── pyproject.toml
-└── requirements.txt
+├── requirements.txt
+└── README.md             # This file
 ```
 
 **Key Benefits:**
@@ -93,10 +102,12 @@ webhook/
 - ✅ API versioning support
 - ✅ Dependency injection pattern
 
-For detailed structure explanation, see [FOLDER_STRUCTURE.md](FOLDER_STRUCTURE.md) and [REFACTORING_SUMMARY.md](REFACTORING_SUMMARY.md).
+## 📚 Documentation
 
-└── README.md                 # This file
-```
+- **[Folder Structure Guide](docs/development/FOLDER_STRUCTURE.md)** - Detailed explanation of project organization
+- **[Refactoring Summary](docs/development/REFACTORING_SUMMARY.md)** - History of architectural improvements
+- **[Cleanup Summary](docs/development/CLEANUP_SUMMARY.md)** - Documentation cleanup details
+- **[Debugging Guide](docs/guides/DEBUGGING_GUIDE.md)** - Troubleshooting webhook validation errors
 
 ## Setup Instructions
 

@@ -8,4 +8,3 @@ class HealthResponse(BaseModel):
     kafka: str
     message: str | None = None
 
-# Made with Bob
