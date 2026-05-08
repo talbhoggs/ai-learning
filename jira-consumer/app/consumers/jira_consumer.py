@@ -90,4 +90,3 @@ class JiraEventConsumer:
         """Check if consumer is connected"""
         return self.consumer is not None
 
-# Made with Bob

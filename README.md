@@ -28,7 +28,31 @@ poetry run uvicorn app.main:app --reload
 
 ---
 
-### 2. Python Scripts
+### 2. Jira Consumer (`jira-consumer/`) 🆕
+
+A Kafka consumer service that processes Jira webhook events with **bidirectional Jira integration** - automatically posts AI-generated responses back to Jira issues.
+
+**Key Features:**
+- Kafka consumer with consumer group management
+- **Jira API client with comment posting** 🆕
+- Retry logic with exponential backoff
+- Health checks and monitoring
+- Comprehensive unit tests
+- Structured logging
+
+**Quick Start:**
+```bash
+cd jira-consumer
+poetry install
+# Configure .env with Jira credentials
+poetry run python -m app.main
+```
+
+**Documentation:** See [jira-consumer/README.md](jira-consumer/README.md) for detailed setup and usage.
+
+---
+
+### 3. Python Scripts
 
 - `app.py` - Main application script
 - `ollama.py` - Ollama integration
@@ -51,6 +75,11 @@ Each project contains its own detailed documentation:
 - API references
 - Architecture diagrams
 - Troubleshooting guides
+- Implementation guides
+
+**Recent Additions:**
+- [Jira Integration Guide](jira-consumer/docs/JIRA_PHASE1_COMPLETE.md) - Complete Jira API integration
+- [Uncommitted Changes Summary](jira-consumer/docs/UNCOMMITTED_CHANGES.md) - Latest updates
 
 ## 🚀 Getting Started
 

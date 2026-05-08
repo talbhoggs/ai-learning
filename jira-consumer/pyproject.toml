@@ -15,6 +15,7 @@ httpx = "^0.25.0"
 tenacity = "^8.2.3"
 python-dotenv = "^1.0.0"
 prometheus-client = "^0.19.0"
+jira = "^3.5.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
