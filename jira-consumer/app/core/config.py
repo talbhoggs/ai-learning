@@ -16,6 +16,12 @@ class Settings(BaseSettings):
     langgraph_api_url: str = os.getenv("LANGGRAPH_API_URL", "")
     langgraph_api_key: str = os.getenv("LANGGRAPH_API_KEY", "")
     
+    # Jira Configuration
+    jira_server: str = os.getenv("JIRA_SERVER", "")
+    jira_email: str = os.getenv("JIRA_EMAIL", "")
+    jira_api_token: str = os.getenv("JIRA_API_TOKEN", "")
+    jira_enabled: bool = os.getenv("JIRA_ENABLED", "true").lower() == "true"
+    
     # Processing Configuration
     batch_size: int = int(os.getenv("BATCH_SIZE", "10"))
     max_retries: int = int(os.getenv("MAX_RETRIES", "3"))
@@ -37,4 +43,3 @@ class Settings(BaseSettings):
 # Global settings instance
 settings = Settings()
 
-# Made with Bob

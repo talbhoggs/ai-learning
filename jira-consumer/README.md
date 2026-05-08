@@ -1,17 +1,23 @@
 # Jira Consumer
 
-Kafka consumer service that processes Jira webhook events and forwards them to a LangGraph orchestrator for AI-powered processing.
+Kafka consumer service that processes Jira webhook events and forwards them to a LangGraph orchestrator for AI-powered processing. **Now includes bidirectional Jira integration** - automatically posts acknowledgment comments back to Jira issues.
 
 ## Architecture
 
 ```
 Jira → Webhook Producer → Kafka (jira-events) → Consumer → LangGraph Orchestrator
+                                                    ↓
+                                              Jira API Client
+                                                    ↓
+                                            Post Comment to Jira
 ```
 
 ## Features
 
 - ✅ Kafka consumer with consumer group management
 - ✅ Event transformation from Jira to LangGraph format
+- ✅ **Bidirectional Jira integration with comment posting** 🆕
+- ✅ **Jira API client with retry logic and health checks** 🆕
 - ✅ Retry logic with exponential backoff
 - ✅ Circuit breaker for external API calls
 - ✅ Dead Letter Queue for failed messages
@@ -79,6 +85,10 @@ Environment variables (`.env`):
 | `KAFKA_GROUP_ID` | Yes | `jira-consumer-group` | Consumer group ID |
 | `LANGGRAPH_API_URL` | Yes | - | LangGraph API endpoint |
 | `LANGGRAPH_API_KEY` | Yes | - | LangGraph API key |
+| **`JIRA_SERVER`** 🆕 | Yes | - | Jira instance URL (e.g., https://your-domain.atlassian.net) |
+| **`JIRA_EMAIL`** 🆕 | Yes | - | Jira user email |
+| **`JIRA_API_TOKEN`** 🆕 | Yes | - | Jira API token |
+| **`JIRA_ENABLED`** 🆕 | No | `true` | Enable/disable Jira integration |
 | `BATCH_SIZE` | No | `10` | Processing batch size |
 | `MAX_RETRIES` | No | `3` | Max retry attempts |
 | `DLQ_TOPIC` | No | `jira-events-dlq` | Dead letter queue topic |
@@ -96,6 +106,7 @@ jira-consumer/
 │   ├── transformers/
 │   │   └── jira_transformer.py    # Event transformation
 │   ├── clients/
+│   │   ├── jira_client.py         # Jira API client 🆕
 │   │   └── langgraph_client.py    # LangGraph API client
 │   ├── models/
 │   │   ├── jira_event.py          # Input models
@@ -129,12 +140,19 @@ jira-consumer/
 - [x] Core modules initialized
 - [x] Basic entry point working
 
-**Phase 2: Core Consumer** 🚧 IN PROGRESS
-- [ ] Kafka consumer implementation
-- [ ] Message consumption logic
-- [ ] Basic error handling
+**Phase 2: Core Consumer** ✅ COMPLETE
+- [x] Kafka consumer implementation
+- [x] Message consumption logic
+- [x] Basic error handling
 
-**Phase 3: LangGraph Integration** 📋 PLANNED
+**Phase 3: Jira Integration** ✅ COMPLETE 🆕
+- [x] Jira API client implementation
+- [x] Comment posting functionality
+- [x] Health checks and retry logic
+- [x] Comprehensive unit tests
+- [x] Integration with message processor
+
+**Phase 4: LangGraph Integration** 📋 PLANNED
 - [ ] Event transformation
 - [ ] LangGraph client
 - [ ] End-to-end flow
@@ -235,6 +253,9 @@ docker-compose up -d
 - [Architecture Plan](../webhook/docs/architecture/CONSUMER_ARCHITECTURE_PLAN.md)
 - [Implementation Guide](../webhook/docs/architecture/IMPLEMENTATION_PLAN.md)
 - [Quick Start Guide](../webhook/docs/architecture/QUICK_START_GUIDE.md)
+- **[Jira Integration Guide](docs/JIRA_PHASE1_COMPLETE.md)** 🆕
+- **[Jira Service Design](docs/JIRA_SERVICE_DESIGN.md)** 🆕
+- **[Uncommitted Changes Summary](docs/UNCOMMITTED_CHANGES.md)** 🆕
 
 ## License
 

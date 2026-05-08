@@ -114,4 +114,3 @@ class JiraEvent(BaseModel):
             }
         }
 
-# Made with Bob

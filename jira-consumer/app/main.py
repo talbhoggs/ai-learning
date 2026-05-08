@@ -7,6 +7,8 @@ from app.core.logging import setup_logging, get_logger
 from app.consumers.jira_consumer import JiraEventConsumer
 from app.models.jira_event import JiraEvent
 
+from app.clients.jira_client import JiraClient
+
 # Setup logging
 setup_logging()
 logger = get_logger(__name__)
@@ -41,6 +43,14 @@ def process_message(message: dict) -> None:
         )
 
         logger.info(jira_event.json())
+
+
+        client = JiraClient()
+        if client.health_check():
+            result = client.add_comment(f"{jira_event.issue.key}", "We have received and acknowledged this issue. Our team will begin investigating, and we’ll provide updates here as progress is made.")
+            print(f"✓ Comment posted: {result['id']}")
+        else:
+            print("❌ Jira is not available")
 
        
         logger.debug(f"Event timestamp: {jira_event.timestamp}")
@@ -109,5 +119,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# Made with Bob

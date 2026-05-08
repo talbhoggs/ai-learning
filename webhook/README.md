@@ -51,7 +51,7 @@ webhook/
 ├── requirements.txt          # Python dependencies
 ├── .env.example              # Environment variables template
 ├── .gitignore                # Git ignore rules
-
+```
 ## 📁 Project Structure
 
 The project follows a production-ready, scalable architecture:
